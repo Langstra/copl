@@ -1,6 +1,6 @@
 (function (window) {
 
-  window.aspect = function(obj, func, addition) {
+  window.insert = function(obj, func, addition) {
     var orig = obj[func];
 
     obj[func] = function () {
