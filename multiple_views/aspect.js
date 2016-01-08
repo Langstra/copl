@@ -99,15 +99,8 @@ Weaver._weaveAfter = function (obj,name,funcs,result) {
     result = funcs[i].apply(obj,Array(result),name);
   }
 
-<<<<<<< HEAD:multiple_views/dynprog/aspect.js
-  window.aspectSetInterval = function (exchangeBy) {
-    return _aspectTiming("setInterval", exchangeBy);
-  };
-}(window));
-=======
   return result;
 }
 Weaver._weave = function (obj,name,original,before,after,around,args) {
   return Weaver._weaveAfter(obj,name,after,Weaver._weaveAround(obj,name,original,around,0,Weaver._weaveBefore(obj,name,before,args)));
 }
->>>>>>> AOP1.0:multiple_views/aspect.js
