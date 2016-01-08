@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Aspect.js demo1</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-    <script type="text/javascript" src="./aspect.js"></script>\
+    <script type="text/javascript" src="./aspect.js"></script>
   </head>
   <body>
     
@@ -18,22 +18,43 @@
   </body>
   <script type="text/javascript">
     
-    var myObject = {
-      method: function (v) { // do something here 
-        console.log("myObject function here " + v);
+    function ObjectA(){}
+    ObjectA.prototype = {
+      _id: 0,
+      _name: '',
+      name: function() {
+        return this._name;
+      },
+      id: function() {
+        return this._id;
+      },
+      funcA: function(id,name) {
+        console.log("Ik ben herpederp");
       }
-    };
+    }
 
-    aspect(myObject, "method", function(fn, params) {
-      console.log("entering method");
-      fn();
-      console.log("leaving method");
-    });
+    //Aspect
+    function ProfileAspect(){}
+    ProfileAspect.prototype = {
+      logStart: function ( args) {
+        console.log("Func started");
+      },
+      logEnd: function ( result) {
+        console.log("Func ended");
+      },
+      profileFunc: function ( realFunc, args, funcName) {
+        var start = (new Date ( )).getTime ( );
+        log.debug('Going to execute ' + funcName);
+        var result = realFunc.apply(this,args);
+        log.debug('Elapsed time : ' + ((new Date ( )).getTime ( ) - start)/1000 + ' milliseconds in ' + funcName);
+        return result;
+      }
+    }
 
-    myObject.method('blaat'); // results in
-    //entering method
-    //do something here
-    //leaving method
+    Weaver.addAdvice( ProfileAspect, 'logStart', 'before', ObjectA, 'funcA');
+
+    var a = new ObjectA();
+    a.funcA();
 
   </script>
 </html>
