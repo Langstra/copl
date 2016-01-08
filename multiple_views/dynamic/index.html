@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Aspect.js demo1</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="./dynprog.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+      var myObject = {
+        method: function (v) { // do something here
+          console.log("myObject function here " + v);
+        }
+      };
+
+      aspect(myObject, "method", function(fn, params) {
+        console.log("entering method");
+        fn();
+        console.log("leaving method");
+      });
+
+      myObject.method('blaat'); // results in
+      //entering method
+      //do something here
+      //leaving method
+
+    </script>
+  </body>
+</html>
