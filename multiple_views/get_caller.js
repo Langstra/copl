@@ -23,10 +23,3 @@ function main()
 }
 
 main();
-
-
-function getId()
-{
-  var stack = ErrorStackParser.parse(new Error())[2].functionName;
-  console.log(stack.substring(0,stack.indexOf(".")));
-}
