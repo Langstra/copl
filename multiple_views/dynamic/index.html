@@ -10,9 +10,8 @@
   <body>
     <script type="text/javascript">
 
-      insert(criminalData.prototype, "setName", function(fn, params) {
+      criminalData.prototype.setName = insert(criminalData.prototype, "setName", function(fn, params) {
         console.log("Checking identity");
-        fn();
       });
 
       var j = new Judge();
