@@ -5,16 +5,11 @@
     <meta charset="utf-8" />
     <title>Aspect.js demo1</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="../dynamic/criminalData.js"></script>
     <script type="text/javascript" src="./aspect.js"></script>
   </head>
   <body>
     
-    <div id="container">
-      <div id="content">
-        <h1>Demo</h1>
-        <img src="http://lorempixel.com/400/200/" class="photo"></img>
-      </div>
-    </div>
   </body>
   <script type="text/javascript">
     
@@ -29,7 +24,7 @@
         return this._id;
       },
       funcA: function(id,name) {
-        console.log("Ik ben herpederp");
+        console.log("you just called me");
       }
     }
 
@@ -37,10 +32,10 @@
     function ProfileAspect(){}
     ProfileAspect.prototype = {
       logStart: function ( args) {
-        console.log("Func started");
+        console.log("Func started " + (new Date()).getTime());
       },
       logEnd: function ( result) {
-        console.log("Func ended");
+        console.log("Func ended " + (new Date()).getTime());
       },
       profileFunc: function ( realFunc, args, funcName) {
         var start = (new Date ( )).getTime ( );
@@ -52,6 +47,7 @@
     }
 
     Weaver.addAdvice( ProfileAspect, 'logStart', 'before', ObjectA, 'funcA');
+    Weaver.addAdvice( ProfileAspect, 'logStart', 'after', ObjectA, 'funcA');
 
     var a = new ObjectA();
     a.funcA();
