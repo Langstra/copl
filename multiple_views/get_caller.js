@@ -2,7 +2,6 @@ function ObjectB(){
 }
 ObjectB.prototype = {
   funcB: function() {
-    //console.log(Hello());
     return ObjectB.prototype.funcB.caller;
   }
 }
@@ -24,3 +23,10 @@ function main()
 }
 
 main();
+
+
+function getId()
+{
+  var stack = ErrorStackParser.parse(new Error())[2].functionName;
+  console.log(stack.substring(0,stack.indexOf(".")));
+}
