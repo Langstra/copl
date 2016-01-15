@@ -8,17 +8,65 @@
     <script type="text/javascript" src="./dynamic.js"></script>
   </head>
   <body>
-    <script type="text/javascript">
-      function noJudge() {
-        if (getId() == "Judge")
-        {
-          throw "No access allowed";
-        }
-      }
-      insertRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","addSuspicion","getSuspicions"], noJudge);
 
-      var j = new Judge();
-      j.testView();
+    <input type="radio" name="instance" value="0"> Police Officer<br>
+    <input type="radio" name="instance" value="1"> Judge<br>
+    <input type="radio" name="instance" value="2"> Public Crowd<br>
+
+    Input: <input type="text" name="activity" /> <br>
+
+    <button onclick="executeFunc('setName')">setName(String name)</button>
+    <button onclick="executeFunc('getName')">getName()</button>
+    <button onclick="executeFunc('setBirthDate')">setBirthDate(Date date)</button>
+    <button onclick="executeFunc('getBirthDate')">getBirthDate()</button>
+    <button onclick="executeFunc('addActivity')">addActivity(String ac)</button>
+    <button onclick="executeFunc('getActivities')">getActivities()</button>
+    <button onclick="executeFunc('addSuspicion')">addSuspicion(String ac)</button>
+    <button onclick="executeFunc('getSuspicions')">getSuspicions()</button>
+    <br><br><br>
+    Criminal:<br>
+    <pre id="object">
+
+    </pre>
+    
+  </body>
+  <script type="text/javascript">
+
+    insertRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","addSuspicion","getSuspicions"], noJudge);
+    insertRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","addSuspicion","getSuspicions","getActivities"], noPublicCrowd);
+
+    var judge = new Judge();
+    var policeOfficer = new PoliceOfficer();
+    var publicCrowd = new PublicCrowd();
+
+    function executeFunc(func) {
+      var executor = document.querySelector('input[name="instance"]:checked').value;
+      var args = document.querySelector('input[name="activity"]').value;
+      console.log(args);
+
+      if(executor == 0) { //Police Officer
+        policeOfficer.testView(func, args)
+      } else if(executor == 1) { //Judge
+        judge.testView(func, args)
+      } else if(executor == 2) { //Public Crowd
+        publicCrowd.testView(func, args)
+      }
+      document.getElementById("object").innerHTML = JSON.stringify(criminals[0]);
+    }
+    
+    function noJudge() {
+      if (getId() == "Judge")
+      {
+        throw "No access allowed";
+      }
+    }
+
+    function noPublicCrowd() {
+      if (getId() == "PublicCrowd")
+      {
+        throw "No access allowed";
+      }
+    }
 
     </script>
   </body>

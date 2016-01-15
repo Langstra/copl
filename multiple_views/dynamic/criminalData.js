@@ -33,6 +33,7 @@ function Judge()
 Judge.prototype = {
   testView: function(func, args) {
     this.cd[0][func](args);
+  }
 }
 
 function PublicCrowd()
