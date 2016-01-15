@@ -2,6 +2,7 @@ function ObjectB(){
 }
 ObjectB.prototype = {
   funcB: function() {
+    getId();
     return ObjectB.prototype.funcB.caller;
   }
 }
@@ -27,6 +28,7 @@ main();
 
 function getId()
 {
+  console.log(ErrorStackParser.parse(new Error()));
   var stack = ErrorStackParser.parse(new Error())[2].functionName;
   console.log(stack.substring(0,stack.indexOf(".")));
 }
