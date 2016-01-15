@@ -1,20 +1,18 @@
-function criminalData(name, date)
+function CriminalData(name, date)
 {
   this.name = name;
   this.date = date;
   this.activities = ['testActivity'];
-  this.suspicions = [];
+  this.suspicions = ['testSuspicion'];
 }
 
-criminalData.prototype = {
+CriminalData.prototype = {
   setName: function(name) {
     console.log('setName called');
     this.name = name;
-    console.log(this);
   },
   getName: function() {
     console.log('getName called');
-    console.log(this);
     return this.name;
   },
   setBirthDate: function(date) { this.date = date; },
@@ -25,28 +23,37 @@ criminalData.prototype = {
   getSuspicions: function() { return this.suspicions; }
 };
 
+criminals = [new CriminalData('Al Capone',new Date(1899, 1, 17))];
+console.log(criminals);
+
 function Judge()
 {
   // implementation of a judge
+  this.cd = criminals;
 }
 
 Judge.prototype = {
   testView: function() {
-    var cd = new criminalData('TestSubject',new Date(2016,1,8));
-    cd.setName('NewName');
-    console.log(cd.getName());
+    this.cd[0].setName('NewName');
+    console.log(this.cd[0].getName());
   }
 }
 
 function PublicCrowd()
 {
   // implementation of the public crowd
+  this.cd = criminals;
 }
 
 PublicCrowd.prototype = {
   testView: function() {
-    var cd = new criminalData('TestSubject',new Date(2016,1,8));
-    cd.addActivity('NewActivity');
-    console.log(cd.getActivities());
+    this.cd[0].addActivity('NewActivity');
+    console.log(this.cd[0].getActivities());
   }
+}
+
+function PoliceOfficer()
+{
+  // implementation of a police officer
+  this.cd = criminals;
 }
