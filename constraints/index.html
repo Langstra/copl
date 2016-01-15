@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Aspect.js demo1</title>
+    <script type="text/javascript" src="./object-watch.js"></script>
+    <script type="text/javascript" src="./company.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    var employer = new Employer();
+    employer.watch('wage', function(changes){
+      for (i in employees)
+      {
+        employees[i].setWage(employer.getWage()*0.8);
+      }
+    });
+
+    var employees = [new Employee(),new Employee(),new Employee()];
+    for (i in employees)
+    {
+      employees[i].setWage(i);
+    }
+    console.log(JSON.stringify(employees));
+
+    employer.setWage(5);
+    console.log(employees);
+    </script>
+  </body>
+</html>

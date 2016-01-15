@@ -3,16 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <title>Aspect.js demo1</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="./stacktracer.js"></script>
     <script type="text/javascript" src="./criminalData.js"></script>
     <script type="text/javascript" src="./dynamic.js"></script>
   </head>
   <body>
     <script type="text/javascript">
-
-      CriminalData.prototype.setName = insert(CriminalData.prototype, "setName", function(fn, params) {
-        console.log("Checking identity");
-      });
+      function noJudge() {
+        if (getId() == "Judge")
+        {
+          throw "No access allowed";
+        }
+      }
+      insertRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","addSuspicion","getSuspicions"], noJudge);
 
       var j = new Judge();
       j.testView();
