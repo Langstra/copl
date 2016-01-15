@@ -28,13 +28,12 @@
     <pre id="object">
 
     </pre>
-    
+
   </body>
   <script type="text/javascript">
 
-    insertRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","addSuspicion","getSuspicions"], noJudge);
-    insertRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","addSuspicion","getSuspicions","getActivities"], noPublicCrowd);
-
+    insertJudgeRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","addSuspicion","getSuspicions"]);
+    insertPublicCrowdRestrictions(CriminalData.prototype, ["setName","setBirthDate","addActivity","getActivities","addSuspicion","getSuspicions"]);
     var judge = new Judge();
     var policeOfficer = new PoliceOfficer();
     var publicCrowd = new PublicCrowd();
@@ -42,7 +41,6 @@
     function executeFunc(func) {
       var executor = document.querySelector('input[name="instance"]:checked').value;
       var args = document.querySelector('input[name="activity"]').value;
-      console.log(args);
 
       if(executor == 0) { //Police Officer
         policeOfficer.testView(func, args)
@@ -52,20 +50,6 @@
         publicCrowd.testView(func, args)
       }
       document.getElementById("object").innerHTML = JSON.stringify(criminals[0]);
-    }
-    
-    function noJudge() {
-      if (getId() == "Judge")
-      {
-        throw "No access allowed";
-      }
-    }
-
-    function noPublicCrowd() {
-      if (getId() == "PublicCrowd")
-      {
-        throw "No access allowed";
-      }
     }
 
     </script>
