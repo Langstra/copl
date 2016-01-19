@@ -8,7 +8,6 @@ function CriminalData(name, date)
 
 CriminalData.prototype = {
   setName: function(name) {
-    console.log(name);
     this.name = name;
   },
   getName: function() {

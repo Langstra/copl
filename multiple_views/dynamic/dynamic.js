@@ -1,33 +1,52 @@
-insertJudgeRestrictions = function(obj, funcs)
-{
-  for (funcKey in funcs)
-  {
-    var orig = obj[funcs[funcKey]];
-    //console.log(orig.toString());
-    obj[funcs[funcKey]] = function() {
-      if (getId() == "Judge")
-      {
-        throw "No access allowed";
-      }
-      var result = orig.apply(this, arguments);
-      return result;
-    }
-  }
+var old_setName = CriminalData.prototype.setName;
+CriminalData.prototype.setName = function(name) {
+  checkView(['Judge','PublicCrowd']);
+  var result = old_setName.apply(this, arguments);
+  return result;
 }
 
-insertPublicCrowdRestrictions = function(obj, funcs)
+var old_setBirthDate = CriminalData.prototype.setBirthDate;
+CriminalData.prototype.setBirthDate = function(date) {
+  checkView(['Judge','PublicCrowd']);
+  var result = old_setBirthDate.apply(this, arguments);
+  return result;
+}
+
+var old_addActivity = CriminalData.prototype.addActivity;
+CriminalData.prototype.addActivity = function(ac) {
+  checkView(['Judge','PublicCrowd']);
+  var result = old_addActivity.apply(this, arguments);
+  return result;
+}
+
+var old_getActivities = CriminalData.prototype.getActivities;
+CriminalData.prototype.getActivities = function(ac) {
+  checkView(['PublicCrowd']);
+  var result = old_getActivities.apply(this, arguments);
+  return result;
+}
+
+var old_addSuspicion = CriminalData.prototype.addSuspicion;
+CriminalData.prototype.addSuspicion = function(ac) {
+  checkView(['Judge','PublicCrowd']);
+  var result = old_addSuspicion.apply(this, arguments);
+  return result;
+}
+
+var old_getSuspicions = CriminalData.prototype.getSuspicions;
+CriminalData.prototype.getSuspicions = function(ac) {
+  checkView(['Judge','PublicCrowd']);
+  var result = old_getSuspicions.apply(this, arguments);
+  return result;
+}
+
+function checkView(restrictions)
 {
-  for (funcKey in funcs)
+  for (res in restrictions)
   {
-    var orig = obj[funcs[funcKey]];
-    obj[funcs[funcKey]] = function() {
-      if (getId() == "PublicCrowd")
-      {
-        throw "No access allowed";
-      }
-      var result = orig.apply(this, arguments);
-      // orig wordt steeds overschreven dus hij voert uiteindelijk alleen de laatst aangepaste functie uit. Iets met eval en function.toString() doen denk ik
-      return result;
+    if (getId() == restrictions[res])
+    {
+      throw "No access allowed";
     }
   }
 }
