@@ -25,7 +25,12 @@
     <button onclick="executeFunc('getActivities')">getActivities()</button>
     <button onclick="executeFunc('addSuspicion')">addSuspicion(String ac)</button>
     <button onclick="executeFunc('getSuspicions')">getSuspicions()</button>
-    <br><br><br>
+    <br><br>
+    <span id="notice" style="color:red; font-weight: bold;">
+      
+    </span>
+    <br>
+    <br>
     Criminal:<br>
     <pre id="object">
 
@@ -37,18 +42,24 @@
     var judge = new Judge();
     var policeOfficer = new PoliceOfficer();
     var publicCrowd = new PublicCrowd();
+    document.getElementById("object").innerHTML = JSON.stringify(criminals[0]);
 
     function executeFunc(func) {
       var executor = document.querySelector('input[name="instance"]:checked').value;
       var args = document.querySelector('input[name="activity"]').value;
-      console.log(args);
 
-      if(executor == 0) { //Police Officer
-        policeOfficer.testView(func, args)
-      } else if(executor == 1) { //Judge
-        judge.testView(func, args)
-      } else if(executor == 2) { //Public Crowd
-        publicCrowd.testView(func, args)
+      try {
+        if(executor == 0) { //Police Officer
+          policeOfficer.testView(func, args)
+        } else if(executor == 1) { //Judge
+          judge.testView(func, args)
+        } else if(executor == 2) { //Public Crowd
+          publicCrowd.testView(func, args)
+        }
+        document.getElementById("notice").innerHTML = "";
+      } catch(err) {
+        console.log(err);
+        document.getElementById("notice").innerHTML = err;
       }
       document.getElementById("object").innerHTML = JSON.stringify(criminals[0]);
     }
@@ -62,12 +73,6 @@
       },
       viewError: function (args) {
         return "Wrong view caller";
-      },
-      isPoliceOfficer: function (args) {
-        if(ViewAspect.prototype.getView() == 'PoliceOfficer') {
-          throw ViewAspect.prototype.viewError();
-        }
-        return args;
       },
       isPublicCrowd: function (args) {
         if(ViewAspect.prototype.getView() == 'PublicCrowd') {
