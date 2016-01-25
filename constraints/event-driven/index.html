@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Aspect.js demo1</title>
+    <title>Event-driven constraint enforcement</title>
     <script type="text/javascript" src="./object-watch.js"></script>
     <script type="text/javascript" src="./company.js"></script>
   </head>
@@ -15,13 +15,12 @@
           <td id="employerWage"></td><td id="employee1Wage"></td><td id="employee2Wage"></td><td id="employee3Wage"></td>
         </tr>
         <tr>
-          <td><input type="number" name="0"></td><td><input type="number" name="1"></td><td><input type="number" name="2"></td><td><input type="number" name="3"></td>
+          <td><input type="number" name="0" value="0"></td><td><input type="number" name="1" value="0"></td><td><input type="number" name="2" value="0"></td><td><input type="number" name="3" value="0"></td>
         </tr>
         <tr>
           <td><button onclick="emulate(0)">Update wage</button></td><td><button onclick="emulate(1)">Update wage</button></td><td><button onclick="emulate(2)">Update wage</button></td><td><button onclick="emulate(3)">Update wage</button></td>
         </tr>
     </table>
-    <button onclick="constraints()">Turn constraints on</button>
     <script type="text/javascript">
       var employer = new Employer();
       var employees = [new Employee(),new Employee(),new Employee()];
@@ -33,10 +32,26 @@
         employer.watch('wage', function(property, oldval, newval){
           for (i in employees)
           {
-            employees[i].setWage(Math.round(newval*0.8*100)/100);
+            if (employees[i].getWage() > (newval*0.8))
+            {
+              employees[i].setWage(Math.round(newval*0.8*100)/100);
+            }
           }
           return newval;
         });
+        for (i in employees)
+        {
+          employees[i].watch('wage', function(property, oldval, newval){
+            if (newval <= employer.getWage()*0.8)
+            {
+              return newval;
+            }
+            else
+            {
+              return oldval;
+            }
+          });
+        }
 
       function emulate(person)
       {
