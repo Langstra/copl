@@ -9,4 +9,4 @@ The first problem is solved with the use of:
 
 The second problem is solved with the use of:
 * Dynamic programming [Example](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Langstra/copl/master/constraints/dynamic/index.html)
-* Event-driven programming [Example](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Langstra/copl/master/dynamic/event-driven/index.html)
+* Event-driven programming [Example](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Langstra/copl/master/constraints/event-driven/index.html)
