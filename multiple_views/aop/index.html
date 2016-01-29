@@ -27,7 +27,7 @@
     <button onclick="executeFunc('getSuspicions')">getSuspicions()</button>
     <br><br>
     <span id="notice" style="color:red; font-weight: bold;">
-      
+
     </span>
     <br>
     <br>
@@ -35,7 +35,7 @@
     <pre id="object">
 
     </pre>
-    
+
   </body>
   <script type="text/javascript">
 
@@ -63,7 +63,6 @@
       }
       document.getElementById("object").innerHTML = JSON.stringify(criminals[0]);
     }
-    
 
     function ViewAspect(){}
     ViewAspect.prototype = {
@@ -85,24 +84,6 @@
           throw ViewAspect.prototype.viewError();
         }
         return args;
-      }
-    }
-
-    //Aspect
-    function ProfileAspect(){}
-    ProfileAspect.prototype = {
-      logStart: function ( args) {
-        console.log("Func started " + (new Date()).getTime());
-      },
-      logEnd: function ( result) {
-        console.log("Func ended " + (new Date()).getTime());
-      },
-      profileFunc: function ( realFunc, args, funcName) {
-        var start = (new Date ( )).getTime ( );
-        log.debug('Going to execute ' + funcName);
-        var result = realFunc.apply(this,args);
-        log.debug('Elapsed time : ' + ((new Date ( )).getTime ( ) - start)/1000 + ' milliseconds in ' + funcName);
-        return result;
       }
     }
 
